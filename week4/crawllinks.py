@@ -12,12 +12,10 @@ def crawllinks(url, linkpos, reps):
     html = urllib.request.urlopen(url).read()
     soup = BeautifulSoup(html, 'lxml')
     tags = soup('a')
+    index = linkpos - 1
 
-    new_url = tags[linkpos - 1]['href']
+    new_url = tags[index]['href']
     reps -= 1
-    if reps > 0:
-        return crawllinks(new_url, linkpos, reps)
-    else:
-        return tags[linkpos - 1].string
+    return crawllinks(new_url, linkpos, reps) if (reps > 0) else tags[index].string
 
 print(crawllinks(URL, LINKPOS, REPS))
